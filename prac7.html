@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Digit Conversion</title>
+  <link rel="stylesheet" href="prac7.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Digit Conversion</h1>
+    <label for="numDigits">Enter the number of digits:</label>
+    <input type="number" id="numDigits">
+    <button id="createInputBtn">Create Input Boxes</button>
+
+    <div id="inputContainer"></div>
+
+    <button id="convertBtn">Convert to Decimal</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    function convertToDecimal(digits) {
+        let decimalInteger = 0;
+  
+        for (let i = 0; i < digits.length; i++) {
+          decimalInteger = decimalInteger * 10 + digits[i];
+        }
+  
+        return decimalInteger;
+      }
+  
+      document.getElementById("createInputBtn").addEventListener("click", function() {
+        const numDigits = parseInt(document.getElementById("numDigits").value);
+  
+        if (isNaN(numDigits) || numDigits <= 0) {
+          return;
+        }
+
+        const inputContainer = document.getElementById("inputContainer");
+      inputContainer.innerHTML = '';
+
+      for (let i = 1; i <= numDigits; i++) {
+        const input = document.createElement("input");
+        input.type = "number";
+        input.placeholder = "Digit " + i;
+        inputContainer.appendChild(input);
+      }
+    });
+
+    document.getElementById("convertBtn").addEventListener("click", function() {
+      const inputElements = document.querySelectorAll("#inputContainer input");
+      const digitArray = Array.from(inputElements).map(input => parseInt(input.value));
+
+      if (digitArray.some(isNaN)) {
+        document.getElementById("result").textContent = "Invalid input. Please enter valid digits.";
+        return;
+      }
+
+      const decimalInteger = convertToDecimal(digitArray);
+      document.getElementById("result").textContent = "Decimal integer: " + decimalInteger;
+    });
+  </script>
+</body>
+</html>
